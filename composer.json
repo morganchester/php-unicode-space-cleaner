@@ -1,11 +1,11 @@
 {
   "name": "morganchester/php-unicode-space-cleaner",
-  "description": "A universal Unicode cleaner that trims and replaces all special whitespace with a single space",
+  "description": "A Unicode whitespace cleaner that replaces exotic Unicode spaces with a single ASCII space.",
   "type": "library",
-  "license": "GPL-3.0-or-later"
+  "license": "GPL-3.0-or-later",
   "autoload": {
     "psr-4": {
-      "UnicodeCleaner\\": "src/"
+      "Morganchester\\UnicodeCleaner\\": "src/"
     }
   },
   "require": {
