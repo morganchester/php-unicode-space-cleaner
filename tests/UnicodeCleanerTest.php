@@ -41,4 +41,34 @@ final class UnicodeCleanerTest extends TestCase
         $expected = "Nothing to clean here.";
         $this->assertSame($expected, UnicodeCleaner::clean($input));
     }
+
+    // 🔥 cleanTotal()
+
+    public function testCleanTotalRemovesAllInvisibleJunk(): void
+    {
+        $input = "\u{200B}\u{200C}\u{202E}\u{034F}\u{061C}ABC\u{200D}\u{202C}\u{180E}";
+        $expected = "ABC";
+        $this->assertSame($expected, UnicodeCleaner::cleanTotal($input));
+    }
+
+    public function testCleanTotalLeavesNormalTextIntact(): void
+    {
+        $input = "Clean text, nothing shady here!";
+        $expected = "Clean text, nothing shady here!";
+        $this->assertSame($expected, UnicodeCleaner::cleanTotal($input));
+    }
+
+    public function testCleanTotalHandlesCombinedEdgeCase(): void
+    {
+        $input = "\u{200E}\u{FEFF}\u{00A0} \u{034F} Real \u{202F} Text \u{061C}";
+        $expected = "Real Text";
+        $this->assertSame($expected, UnicodeCleaner::cleanTotal($input));
+    }
+
+    public function testCleanTotalHandlesEmptyAfterCleaning(): void
+    {
+        $input = "\u{200B}\u{200C}\u{202F}\u{061C}\u{FEFF}";
+        $expected = "";
+        $this->assertSame($expected, UnicodeCleaner::cleanTotal($input));
+    }
 }
